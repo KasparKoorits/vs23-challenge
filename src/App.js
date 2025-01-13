@@ -1,10 +1,11 @@
 import Header from "./components/Header";
-import Meals from "./components/Meals"; // pole vaja veel aga las olla
+import Meals from "./components/Meals";
 
 const App = () => {
   return (
     <div>
       <Header />
+      <Meals />
     </div>
   );
 };
