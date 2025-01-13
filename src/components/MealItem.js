@@ -1,12 +1,19 @@
 import Button from "./UI/Button";
+import { useContext } from "react";
+import CartContext from "../store/CartContext";
 
 const MealItem = (props) => {
+  const { dispatch } = useContext(CartContext);
   const imagePath = require(`../assets/${props.meal.image}`);
 
   const formattedPrice = new Intl.NumberFormat("de-DE", {
     style: "currency",
     currency: "EUR",
   }).format(props.meal.price);
+
+  const addToCartHandler = () => {
+    dispatch({ type: "ADD_ITEM", item: props.meal });
+  };
 
   return (
     <li className="meal-item">
@@ -18,7 +25,7 @@ const MealItem = (props) => {
           <p>{props.meal.description}</p>
         </div>
         <div className="meal-item-actions">
-          <button className="button">Add to Cart</button>
+          <Button onClick={addToCartHandler}>Add to Cart</Button>
         </div>
       </article>
     </li>
