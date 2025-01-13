@@ -1,13 +1,10 @@
 const fs = require("fs/promises");
-const bodyParser = require("body-parser")
 const path = require("path");
 const express = require("express");
 
 const app = express();
 
-app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, "..", "build")));
-app.use(express.static('public'));
+app.use(express.static("public"));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -17,16 +14,18 @@ app.use((req, res, next) => {
 });
 
 app.get("/meals", async (req, res) => {
-  const meals = "[]" // data should be read from file
-  res.json(JSON.parse(meals));
-});
-
-app.use((req, res) => {
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
+  try {
+    const data = await fs.readFile(
+      path.join(__dirname, "data", "meals.json"),
+      "utf-8"
+    );
+    const meals = JSON.parse(data);
+    res.json(meals);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to load meals." });
   }
-
-  res.status(404).json({ message: "Not found" });
 });
 
-app.listen(3001);
+app.listen(3001, () => {
+  console.log("Backend server is running on http://localhost:3001");
+});
