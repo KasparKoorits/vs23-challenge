@@ -20,6 +20,9 @@ const cartReducer = (state, action) => {
         return [...state, { ...action.item, quantity: 1 }];
       }
 
+    case "RESET_CART":
+      return [];
+
     default:
       return state;
   }
