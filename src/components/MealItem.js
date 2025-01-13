@@ -1,3 +1,5 @@
+import Button from "./UI/Button";
+
 const MealItem = (props) => {
   const imagePath = require(`../assets/${props.meal.image}`);
 
@@ -16,7 +18,7 @@ const MealItem = (props) => {
           <p>{props.meal.description}</p>
         </div>
         <div className="meal-item-actions">
-          <button>Add to Cart</button>
+          <button className="button">Add to Cart</button>
         </div>
       </article>
     </li>
